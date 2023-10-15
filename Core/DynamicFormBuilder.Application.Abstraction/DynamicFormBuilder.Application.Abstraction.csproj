@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicFormBuilder.Application.DTO\DynamicFormBuilder.Application.DTO.csproj" />
+    <ProjectReference Include="..\DynamicFormBuilder.Domain\DynamicFormBuilder.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

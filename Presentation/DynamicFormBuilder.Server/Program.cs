@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 
-namespace DynamicFormBuilder
+namespace DynamicFormBuilder.Server
 {
     public class Program
     {

@@ -1,4 +1,4 @@
-using DynamicFormBuilder.Shared;
+using DynamicFormBuilder.Application.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DynamicFormBuilder.Server.Controllers

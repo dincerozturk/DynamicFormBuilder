@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\DynamicFormBuilder.Shared.csproj" />
+    <ProjectReference Include="..\..\Core\DynamicFormBuilder.Application.Abstraction\DynamicFormBuilder.Application.Abstraction.csproj" />
+    <ProjectReference Include="..\DynamicFormBuilder.Component\DynamicFormBuilder.Component.csproj" />
   </ItemGroup>
 
   <ItemGroup>

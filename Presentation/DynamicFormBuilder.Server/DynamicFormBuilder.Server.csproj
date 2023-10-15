@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\DynamicFormBuilder.Client.csproj" />
-    <ProjectReference Include="..\Shared\DynamicFormBuilder.Shared.csproj" />
+    <ProjectReference Include="..\DynamicFormBuilder.Client\DynamicFormBuilder.Client.csproj" />
   </ItemGroup>
 
 
