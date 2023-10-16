@@ -1,3 +1,9 @@
-﻿<div class="my-component">
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+<div class="my-component">
     This component is defined in the <strong>DynamicFormBuilder.Component</strong> library.
 </div>
+<InputText ValueChanged="ValueChanged"></InputText>
+@code{
+    public EventCallback<string> ValueChanged { get; set; }
+}

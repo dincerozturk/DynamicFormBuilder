@@ -5,7 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.12" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicFormBuilder.Application.DTO\DynamicFormBuilder.Application.DTO.csproj" />
     <ProjectReference Include="..\DynamicFormBuilder.Domain\DynamicFormBuilder.Domain.csproj" />

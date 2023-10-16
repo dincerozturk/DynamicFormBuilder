@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DynamicFormBuilder.Domain.Entities.Base
@@ -21,7 +20,7 @@ namespace DynamicFormBuilder.Domain.Entities.Base
     }
     public interface ICreatedById
     {
-        Guid? CreatedById { get; set; }
+        int? CreatedById { get; set; }
     }
     public interface IUpdatedDate
     {
@@ -29,7 +28,7 @@ namespace DynamicFormBuilder.Domain.Entities.Base
     }
     public interface IUpdatedById
     {
-        Guid? UpdatedById { get; set; }
+        int? UpdatedById { get; set; }
     }
 
     public interface ISoftDelete
@@ -64,13 +63,19 @@ namespace DynamicFormBuilder.Domain.Entities.Base
 
     public abstract class AAuditableEntity<TKey> : AEntity<TKey>, IAuditableEntity<TKey>, IEntity<TKey> where TKey : struct
     {
+        [Column(Order = 2)]
         public DateTime? CreatedDate { get; set; }
-        public Guid? CreatedById { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public Guid? UpdatedById { get; set; }
-        public bool IsDeleted { get; set; }
 
-        [DefaultValue(false)]
-        public bool IsPassive { get; set; }
+        [Column(Order = 3)]
+        public int? CreatedById { get; set; }
+
+        [Column(Order = 4)]
+        public DateTime? UpdatedDate { get; set; }
+
+        [Column(Order = 5)]
+        public int? UpdatedById { get; set; }
+
+        [Column(Order = 6)]
+        public bool IsDeleted { get; set; }
     }
 }

@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
+﻿using DynamicFormBuilder.Domain.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace DynamicFormBuilder.Domain.Entities
 {
-    public class FieldData
+    public class FieldData : AAuditableEntity<int>
     {
-        [Key]
-        public int Id { get; set; }
         public int FieldSpecId { get; set; }
         public FieldSpec FieldSpec { get; set; }
         public string Name { get; set; }

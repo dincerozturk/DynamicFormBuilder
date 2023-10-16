@@ -1,7 +1,7 @@
 ﻿using DynamicFormBuilder.Domain.Entities.Base;
 using Microsoft.AspNetCore.Http;
 
-namespace DynamicFormBuilder.Application.Extensions
+namespace DynamicFormBuilder.Persistence.Extensions
 {
     public static class EntityExtensions
     {
@@ -49,24 +49,6 @@ namespace DynamicFormBuilder.Application.Extensions
             destinationEntity.UpdatedById = GetUserId();
 
             return destinationEntity;
-        }
-
-        /// <summary>
-        /// Create için ICreateEntity interface ile implemente edilmiş nesneye gerekli userId ve ip bilgilerini set eder 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model"></param>
-        /// <param name="userId"></param>
-        /// <param name="ip"></param>
-        /// <returns></returns>
-        public static T SetCreatedValues<T>(this T model, Guid userId) where T : ICreateAuditableEntity
-        {
-            if (model == null)
-                return model;
-
-            model.CreatedDate = DateTime.Now;
-            model.CreatedById = userId;
-            return model;
         }
 
         /// <summary>
@@ -149,9 +131,9 @@ namespace DynamicFormBuilder.Application.Extensions
         /// login olmuş kullanıcnın Id sini getiren metot
         /// </summary>
         /// <returns></returns>
-        private static Guid? GetUserId()
+        private static int? GetUserId()
         {
-            Guid? userId = null;
+            int? userId = null;
             if (_httpContextAccessor != null)
             {
                 //var claims = _httpContextAccessor.HttpContext.User?.Identities?.FirstOrDefault()?.Claims?.ToList();
@@ -162,7 +144,7 @@ namespace DynamicFormBuilder.Application.Extensions
                 //        userId = new Guid(userIdStr);
                 //}
             }
-            userId = new Guid("12345678-1234-1234-1234-123456789012");
+            userId = 1;
             return userId;
         }
 
