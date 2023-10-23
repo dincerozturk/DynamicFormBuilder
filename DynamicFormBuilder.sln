@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicFormBuilder.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicFormBuilder.Server", "Presentation\DynamicFormBuilder.Server\DynamicFormBuilder.Server.csproj", "{E8FE474C-6684-4896-8E1C-A9E5D30E9767}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicFormBuilder.Domain.Base", "Core\DynamicFormBuilder.Domain.Base\DynamicFormBuilder.Domain.Base.csproj", "{4CCD0CCE-1771-4B03-956D-19513FE19E13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{E8FE474C-6684-4896-8E1C-A9E5D30E9767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8FE474C-6684-4896-8E1C-A9E5D30E9767}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8FE474C-6684-4896-8E1C-A9E5D30E9767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCD0CCE-1771-4B03-956D-19513FE19E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCD0CCE-1771-4B03-956D-19513FE19E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCD0CCE-1771-4B03-956D-19513FE19E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCD0CCE-1771-4B03-956D-19513FE19E13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{DE226095-40E2-418D-A1E4-D20A15FB9F33} = {7358749B-5FAF-4EDA-8110-2504004C8AE7}
 		{30C44007-8601-425C-B7AD-9C44F963F105} = {7358749B-5FAF-4EDA-8110-2504004C8AE7}
 		{E8FE474C-6684-4896-8E1C-A9E5D30E9767} = {7358749B-5FAF-4EDA-8110-2504004C8AE7}
+		{4CCD0CCE-1771-4B03-956D-19513FE19E13} = {7656B966-6B45-4E55-8E57-CE62C9DF7CEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {43002EA9-FD62-4E1F-A24C-CFF57CB0EB53}

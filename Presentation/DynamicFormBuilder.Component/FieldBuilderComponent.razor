@@ -1,0 +1,98 @@
+﻿@using DynamicFormBuilder.Application.DTO;
+@using DynamicFormBuilder.Domain.Enums;
+@using Microsoft.AspNetCore.Components.Forms
+
+@if (Model != null)
+{
+    <div>
+        <label>@Model.Label</label>
+        @{
+            if (Model.ElementTypeId == (byte)ElementType.input)
+            {
+                if (Model.ElementInputTypeId == (byte)ElementInputType.text)
+                {
+                    <InputText @key="Model.Id" @bind-Value="Model.Value" @attributes="@Model.AdditionalAttribute"/>
+                }
+                else if (Model.ElementInputTypeId == (byte)ElementInputType.number)
+                {
+                    <InputNumber @key="Model.Id" @bind-Value="intValue" @attributes="@Model.AdditionalAttribute" />
+                    //<input type="number" id="@Model.Id" @bind-value="Model.Value" @attributes="Model.AdditionalAttribute">
+                }
+                else if (Model.ElementInputTypeId == (byte)ElementInputType.checkbox)
+                {
+                    <InputCheckbox @bind-Value="boolValue" @attributes="@Model.AdditionalAttribute" />
+                }
+                else if (Model.ElementInputTypeId == (byte)ElementInputType.radio)
+                {
+                    if (Model.FieldDatas.Any())
+                    {
+                        <InputRadioGroup @bind-Value="Model.Value" @attributes="@Model.AdditionalAttribute">
+                            @foreach (var item in Model.FieldDatas)
+                            {
+                                <InputRadio Value="item.Value" />
+                                <label>@item.DisplayName</label>
+                            }
+                        </InputRadioGroup>
+                    }                    
+                }
+                else if (Model.ElementInputTypeId == (byte)ElementInputType.datetimelocal)
+                {
+                    <InputDate @bind-Value="datetimeValue" @attributes="@Model.AdditionalAttribute" />
+                }
+            }
+            else if (Model.ElementTypeId == (byte)ElementType.select)
+            {
+                <InputSelect @bind-Value="Model.Value" @attributes="@Model.AdditionalAttribute">
+                    @foreach (var fieldData in Model.FieldDatas)
+                    {
+                        <option value="@fieldData.Value">@fieldData.Name</option>
+                    }
+                </InputSelect>
+            }
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public FieldSpecDTO Model { get; set; }
+
+    bool boolValue
+    {
+        get => Convert.ToBoolean(Model.Value);
+        set => Model.Value = value.ToString();
+    }
+    string stringValue
+    {
+        get => Model.Value;
+        set => Model.Value = value;
+    }
+    int intValue
+    {
+        get => Convert.ToInt32(Model.Value);
+        set => Model.Value = value.ToString();
+    }
+    DateTime datetimeValue
+    {
+        get => Convert.ToDateTime(Model.Value);
+        set => Model.Value = value.ToString();
+    }
+    IList<string> listValue
+    {
+        get => Model.Value.Split(",");
+        set => Model.Value = string.Join(",", value.ToArray());
+    }
+
+    // void OnValueChanged(bool newValue)
+    // {
+    //     boolValue = newValue;
+    //     Model.Value = newValue.ToString();
+    // }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        await base.OnInitializedAsync();
+    }
+
+}

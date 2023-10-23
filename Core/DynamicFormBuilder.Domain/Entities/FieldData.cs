@@ -1,5 +1,4 @@
-﻿using DynamicFormBuilder.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using DynamicFormBuilder.Domain.Base;
 
 namespace DynamicFormBuilder.Domain.Entities
 {
@@ -8,6 +7,7 @@ namespace DynamicFormBuilder.Domain.Entities
         public int FieldSpecId { get; set; }
         public FieldSpec FieldSpec { get; set; }
         public string Name { get; set; }
+        public string DisplatName { get; set; }
         public string Value { get; set; }
     }
 }

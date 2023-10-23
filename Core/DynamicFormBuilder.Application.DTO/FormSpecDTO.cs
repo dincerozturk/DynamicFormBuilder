@@ -1,9 +1,9 @@
-﻿using DynamicFormBuilder.Domain.Base;
+﻿using DynamicFormBuilder.Application.DTO.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DynamicFormBuilder.Domain.Entities
+namespace DynamicFormBuilder.Application.DTO
 {
-    public class FormSpec : AAuditableEntity<int>
+    public class FormSpecDTO : AAuditableEntityDto<int>
     {
         /// <summary>
         /// Form adı
@@ -33,7 +33,7 @@ namespace DynamicFormBuilder.Domain.Entities
         /// </summary>
         public Dictionary<string, object> AdditionalAttribute { get; }
 
-        public IEnumerable<FieldSpec> FieldSpecs { get; set; }
-        public IEnumerable<FormSubmission> FormSubmissions { get; set; }
+        public IList<FieldSpecDTO> FieldSpecs { get; set; }
+        public IList<FormSubmissionDTO> FormSubmissions { get; set; }
     }
 }

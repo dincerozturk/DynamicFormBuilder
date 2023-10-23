@@ -11,4 +11,8 @@
     <Folder Include="EnumExtensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicFormBuilder.Domain.Base\DynamicFormBuilder.Domain.Base.csproj" />
+  </ItemGroup>
+
 </Project>

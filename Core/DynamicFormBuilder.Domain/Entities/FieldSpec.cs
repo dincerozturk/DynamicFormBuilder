@@ -1,5 +1,4 @@
-﻿using DynamicFormBuilder.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using DynamicFormBuilder.Domain.Base;
 
 namespace DynamicFormBuilder.Domain.Entities
 {
@@ -11,18 +10,20 @@ namespace DynamicFormBuilder.Domain.Entities
         public string Label { get; set; }
         public string InputName { get; set; }
 
+        /// <summary>
+        /// ElementType Enum değerlerini alır
+        /// </summary>
         public byte ElementTypeId { get; set; }
+
+        /// <summary>
+        /// ElementType Input ise dolar, Input Element Type Enum değerlerini alır
+        /// </summary>
+        public byte? ElementInputTypeId { get; set; }
 
         public string Caption { get; set; }
         public int Order { get; set; }
-        public string PlaceHolder { get; set; }
-        public bool Required { get; set; }
-        public bool Visible { get; set; }
-        public bool Enable { get; set; }
 
-        public string ClassName { get; set; }
-        public string Style { get; set; }
-
+        public Dictionary<string, object> AdditionalAttribute { get; }
         public IEnumerable<FieldData> FieldDatas { get; set; }
     }
     public class FieldSpec<TValue> : FieldSpec

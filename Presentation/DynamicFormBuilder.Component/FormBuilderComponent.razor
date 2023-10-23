@@ -1,0 +1,203 @@
+﻿@using DynamicFormBuilder.Application.DTO;
+@using DynamicFormBuilder.Domain.Enums;
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Text.Json.Serialization;
+@using System.Text.Json;
+
+@if (Model != null)
+{
+    @if (!string.IsNullOrEmpty(Model.Title))
+    {
+        <p>@Model.Title</p>
+    }
+    <EditForm Model="@Model" OnSubmit="@Submit" @attributes="@Model.AdditionalAttribute">
+        <DataAnnotationsValidator />
+
+        @foreach (var fieldSpec in Model.FieldSpecs.OrderBy(x => x.Order))
+        {
+            <FieldBuilderComponent Model="fieldSpec" />
+        }
+        <button type="submit">Gönder</button>
+        @if (FormSubmission != null)
+        {
+            <p>@JsonSerializer.Serialize(FormSubmission)</p>
+        }
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public FormSpecDTO Model { get; set; }
+
+    public FormSubmissionDTO FormSubmission { get; set; }
+
+    List<InputText> InputTextRefs = new List<InputText>();
+    InputText InputTextRef
+    {
+        set { InputTextRefs.Add(value); }
+    }
+
+    Dictionary<string, object> dic = new Dictionary<string, object>
+    {
+        { "multiple", "true" },
+    };
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await getModel();
+        base.OnInitializedAsync();
+    }
+
+    private void Submit(EditContext editContext)
+    {
+        var tt = editContext.Model;
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+
+            var requestModel = Model.FieldSpecs.Select(x => new
+            {
+                Key = x.Id,
+                Value = x.Value,
+            }).ToDictionary(x => x.Key, x => x.Value);
+            FormSubmission = new FormSubmissionDTO()
+                {
+                    FormSpecId = Model.Id,
+                    Payload = requestModel,
+                };
+        }
+    }
+
+    private async Task<FormSpecDTO> getModel()
+    {
+        var model = new FormSpecDTO()
+            {
+                Id = 1,
+                FieldSpecs = new List<FieldSpecDTO>()
+                {
+                  new FieldSpecDTO()
+                  {
+                      Id = 1,
+                      Order = 1,
+                      ElementTypeId = (byte)ElementType.input,
+                      ElementInputTypeId = (byte)ElementInputType.text,
+                      InputName = "input1",
+                      FormSpecId = 1,
+                      Label = "Label1",
+                  },
+                  new FieldSpecDTO()
+                  {
+                      Id = 2,
+                      Order = 2,
+                      ElementTypeId = (byte)ElementType.input,
+                      ElementInputTypeId = (byte)ElementInputType.number,
+                      InputName = "input2",
+                      FormSpecId = 1,
+                      Label = "Label2",
+                  },
+                  new FieldSpecDTO()
+                  {
+                      Id = 3,
+                      Order = 3,
+                      ElementTypeId = (byte)ElementType.input,
+                      ElementInputTypeId = (byte)ElementInputType.checkbox,
+                      InputName = "input3",
+                      FormSpecId = 1,
+                      Label = "Label3",
+                  },
+                  new FieldSpecDTO()
+                  {
+                      Id = 4,
+                      Order = 4,
+                      ElementTypeId = (byte)ElementType.input,
+                      ElementInputTypeId = (byte)ElementInputType.radio,
+                      InputName = "input4",
+                      FormSpecId = 1,
+                      Label = "Label4",
+                      FieldDatas = getFieldDatas(),
+                  },
+                  new FieldSpecDTO()
+                  {
+                      Id = 5,
+                      Order = 5,
+                      ElementTypeId = (byte)ElementType.input,
+                      ElementInputTypeId = (byte)ElementInputType.datetimelocal,
+                      InputName = "input5",
+                      FormSpecId = 1,
+                      Label = "Label5",
+                  },
+                  new FieldSpecDTO()
+                  {
+                      Id = 6,
+                      Order = 6,
+                      ElementTypeId = (byte)ElementType.select,
+                      InputName = "input6",
+                      FormSpecId = 1,
+                      Label = "Label6",
+                      FieldDatas = getFieldDatas(),
+                      AdditionalAttribute = dic
+                  },
+                },
+            };
+
+        var formSubmission = await getFormSubmission();
+        if (formSubmission.Id > 0)
+            await SetFormSubmissionValues(model, formSubmission);
+
+        return model;
+    }
+
+    private async Task SetFormSubmissionValues(FormSpecDTO formSpec, FormSubmissionDTO formSubmission)
+    {
+        foreach (var item in formSpec.FieldSpecs)
+        {
+            var formSubmissionValue = formSubmission.Payload?.FirstOrDefault(x => x.Key == item.Id).Value;
+            item.Value = formSubmission.Payload?.FirstOrDefault(x => x.Key == item.Id).Value;
+        }
+    }
+
+    private async Task<FormSubmissionDTO> getFormSubmission()
+    {
+        var FormSubmission = new FormSubmissionDTO()
+            {
+                Id = 55,
+                FormSpecId = 1,
+                Payload = new Dictionary<int, string>()
+            };
+        FormSubmission.Payload.Add(1, "aaa");
+        FormSubmission.Payload.Add(2, "242342");
+        FormSubmission.Payload.Add(3, "true");
+        FormSubmission.Payload.Add(4, "78"); // fieldDataId
+        FormSubmission.Payload.Add(5, "2023-05-05"); // fieldDataId
+        FormSubmission.Payload.Add(6, "78");
+
+        return FormSubmission;
+    }
+
+    private IList<FieldDataDTO> getFieldDatas()
+    {
+        return new List<FieldDataDTO>()
+            {
+                new FieldDataDTO()
+                         {
+                              Id = 77,
+                               Name = "html",
+                               DisplayName = "HTML",
+                                Value = "77",
+                         },
+                         new FieldDataDTO()
+                         {
+                              Id = 78,
+                               Name = "html2",
+                               DisplayName = "HTML2",
+                                Value = "78",
+                         },
+                         new FieldDataDTO()
+                         {
+                              Id = 79,
+                               Name = "html3",
+                               DisplayName = "HTML3",
+                                Value = "79",
+                        }
+            };
+    }
+}

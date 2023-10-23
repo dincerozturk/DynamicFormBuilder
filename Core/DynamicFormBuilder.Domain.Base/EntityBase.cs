@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DynamicFormBuilder.Domain.Entities.Base
+namespace DynamicFormBuilder.Domain.Base
 {
     public interface IEntityBase
     {

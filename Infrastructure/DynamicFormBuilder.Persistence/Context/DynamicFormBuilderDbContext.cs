@@ -1,8 +1,9 @@
 ﻿using DynamicFormBuilder.Application.Abstraction.Context;
 using DynamicFormBuilder.Domain.Entities;
-using DynamicFormBuilder.Domain.Entities.Base;
 using DynamicFormBuilder.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Text.Json;
 
 namespace DynamicFormBuilder.Persistence.Context
 {
@@ -13,7 +14,6 @@ namespace DynamicFormBuilder.Persistence.Context
 
         }
 
-        public DbSet<ElementType> InputTypes { get; set; }
         public DbSet<FormSpec> FormSpec { get; set; }
         public DbSet<FormSubmission> FormSubmissions { get; set; }
         public DbSet<FieldSpec> FieldSpecs { get; set; }
@@ -36,6 +36,22 @@ namespace DynamicFormBuilder.Persistence.Context
 
             modelBuilder.ApplySoftDeleteQueryFilter("IsDeleted");
 
+            #region Convensions
+
+            modelBuilder.Entity<FormSpec>()
+                .Property(e => e.AdditionalAttribute)
+                .HasConversion(new DictionaryConverter());
+
+            modelBuilder.Entity<FieldSpec>()
+                .Property(e => e.AdditionalAttribute)
+                .HasConversion(new DictionaryConverter());
+
+            modelBuilder.Entity<FormSubmission>()
+                .Property(e => e.Payload)
+                .HasConversion(new DictionaryIntConverter());
+
+            #endregion
+
             #region AutoIncrements
             modelBuilder.HasSequence<int>("DynamicFormBuilderSequence").StartsAt(1).IncrementsBy(1);
             #endregion
@@ -57,74 +73,93 @@ public class DbInitializer
 
     public void Seed()
     {
-        modelBuilder.Entity<ElementType>().HasData(
-         new ElementType()
-         {
-             Id = 1,
-             Name = "input",
-             Description = "input",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 2,
-             Name = "select",
-             Description = "select",
-             IsDeleted = false, 
-         }, new ElementType()
-         {
-             Id = 3,
-             Name = "textarea",
-             Description = "textarea",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 4,
-             Name = "button",
-             Description = "button",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 5,
-             Name = "option",
-             Description = "option",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 6,
-             Name = "optgroup",
-             Description = "optgroup",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 7,
-             Name = "label",
-             Description = "label",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 8,
-             Name = "fieldset",
-             Description = "fieldset",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 9,
-             Name = "datalist",
-             Description = "datalist",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 10,
-             Name = "legend",
-             Description = "legend",
-             IsDeleted = false,
-         }, new ElementType()
-         {
-             Id = 11,
-             Name = "output",
-             Description = "output",
-             IsDeleted = false,
-         }
-         );
+        //modelBuilder.Entity<ElementType>().HasData(
+        // new ElementType()
+        // {
+        //     Id = 1,
+        //     Name = "input",
+        //     Description = "input",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 2,
+        //     Name = "select",
+        //     Description = "select",
+        //     IsDeleted = false, 
+        // }, new ElementType()
+        // {
+        //     Id = 3,
+        //     Name = "textarea",
+        //     Description = "textarea",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 4,
+        //     Name = "button",
+        //     Description = "button",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 5,
+        //     Name = "option",
+        //     Description = "option",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 6,
+        //     Name = "optgroup",
+        //     Description = "optgroup",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 7,
+        //     Name = "label",
+        //     Description = "label",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 8,
+        //     Name = "fieldset",
+        //     Description = "fieldset",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 9,
+        //     Name = "datalist",
+        //     Description = "datalist",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 10,
+        //     Name = "legend",
+        //     Description = "legend",
+        //     IsDeleted = false,
+        // }, new ElementType()
+        // {
+        //     Id = 11,
+        //     Name = "output",
+        //     Description = "output",
+        //     IsDeleted = false,
+        // }
+        // );
+    }
+}
+
+public class DictionaryConverter : ValueConverter<Dictionary<string, object>, string>
+{
+    public DictionaryConverter()
+        : base(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+             v => JsonSerializer.Deserialize<Dictionary<string, object>>(v, (JsonSerializerOptions)null))
+    {
+
+    }
+}
+public class DictionaryIntConverter : ValueConverter<Dictionary<int, object>, string>
+{
+    public DictionaryIntConverter()
+        : base(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+             v => JsonSerializer.Deserialize<Dictionary<int, object>>(v, (JsonSerializerOptions)null))
+    {
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using DynamicFormBuilder.Domain.Entities.Base;
+﻿using DynamicFormBuilder.Domain.Base;
 using Microsoft.AspNetCore.Http;
 
 namespace DynamicFormBuilder.Persistence.Extensions

@@ -15,7 +15,7 @@
         optgroup,
     }
 
-    public enum InputElementType
+    public enum ElementInputType
     {
         button,
         checkbox,
@@ -38,5 +38,18 @@
         time,
         url,
         week,
+    }
+
+    /// <summary>
+    /// InputElement değer tipleri
+    /// </summary>
+    public enum ValueType
+    {
+        Number,
+        Text,
+        ListInt,
+        ListText,
+        Datetime,
+        Boolean,
     }
 }
